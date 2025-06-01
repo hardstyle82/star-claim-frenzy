@@ -2,55 +2,58 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 const PlayerRanking: React.FC = () => {
   const topPlayers = [
-    { rank: 1, name: 'Александр В.', avatar: '👑', stars: 15420, wins: '2 Премиум' },
-    { rank: 2, name: 'Мария К.', avatar: '💎', stars: 12850, wins: '1 Премиум' },
-    { rank: 3, name: 'Дмитрий П.', avatar: '🔥', stars: 9670, wins: '945 звёзд' },
-    { rank: 4, name: 'Елена С.', avatar: '⚡', stars: 8320, wins: '823 звезды' },
-    { rank: 5, name: 'Михаил Т.', avatar: '🚀', stars: 7140, wins: '714 звёзд' },
-    { rank: 6, name: 'Анна Л.', avatar: '🌟', stars: 6580, wins: '658 звёзд' },
-    { rank: 7, name: 'Сергей М.', avatar: '💫', stars: 5920, wins: '592 звезды' },
-    { rank: 8, name: 'Ольга В.', avatar: '✨', stars: 5340, wins: '534 звезды' },
+    { name: 'CryptoKing', stars: 15420, wins: 847 },
+    { name: 'StarHunter', stars: 12890, wins: 731 },
+    { name: 'DiamondMiner', stars: 11567, wins: 692 },
+    { name: 'GoldRush', stars: 10234, wins: 615 },
+    { name: 'MoneyMaker', stars: 9876, wins: 578 },
+    { name: 'LuckyStrike', stars: 8945, wins: 534 },
+    { name: 'CoinCollector', stars: 7823, wins: 489 },
+    { name: 'WealthBuilder', stars: 6754, wins: 423 },
   ];
-
-  const getRankColor = (rank: number) => {
-    switch (rank) {
-      case 1: return 'text-yellow-600';
-      case 2: return 'text-gray-600';
-      case 3: return 'text-orange-600';
-      default: return 'text-gray-800';
-    }
-  };
 
   return (
     <Card className="bg-white/90 backdrop-blur-sm">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          🏆 Топ игроков
-        </CardTitle>
+        <CardTitle className="text-lg">🏆 Топ игроков</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
-          {topPlayers.map(player => (
-            <div key={player.rank} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-3">
-                <div className={`font-bold text-lg ${getRankColor(player.rank)}`}>
-                  #{player.rank}
-                </div>
-                <span className="text-xl">{player.avatar}</span>
-                <div>
-                  <div className="font-medium text-sm">{player.name}</div>
-                  <div className="text-xs text-gray-600">{player.stars} ⭐</div>
-                </div>
-              </div>
-              <Badge variant="outline" className="text-xs">
-                {player.wins}
-              </Badge>
-            </div>
-          ))}
-        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-8">#</TableHead>
+              <TableHead>Игрок</TableHead>
+              <TableHead className="text-right">Звёзды</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {topPlayers.map((player, index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  {index === 0 && '🥇'}
+                  {index === 1 && '🥈'}
+                  {index === 2 && '🥉'}
+                  {index > 2 && index + 1}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {player.name}
+                  {index < 3 && (
+                    <Badge variant="secondary" className="ml-2 text-xs">
+                      {index === 0 ? 'TOP' : index === 1 ? 'PRO' : 'VIP'}
+                    </Badge>
+                  )}
+                </TableCell>
+                <TableCell className="text-right font-bold text-yellow-600">
+                  {player.stars.toLocaleString()} ⭐
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );

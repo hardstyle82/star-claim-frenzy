@@ -9,7 +9,90 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      online_stats: {
+        Row: {
+          created_at: string | null
+          daily_registrations: number
+          date: string | null
+          id: string
+          online_count: number
+        }
+        Insert: {
+          created_at?: string | null
+          daily_registrations: number
+          date?: string | null
+          id?: string
+          online_count: number
+        }
+        Update: {
+          created_at?: string | null
+          daily_registrations?: number
+          date?: string | null
+          id?: string
+          online_count?: number
+        }
+        Relationships: []
+      }
+      user_stats: {
+        Row: {
+          created_at: string | null
+          id: string
+          last_daily_bonus: string | null
+          premium_progress: number | null
+          referral_code: string | null
+          referred_by: string | null
+          stars: number | null
+          total_claims: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          last_daily_bonus?: string | null
+          premium_progress?: number | null
+          referral_code?: string | null
+          referred_by?: string | null
+          stars?: number | null
+          total_claims?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          last_daily_bonus?: string | null
+          premium_progress?: number | null
+          referral_code?: string | null
+          referred_by?: string | null
+          stars?: number | null
+          total_claims?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      wins: {
+        Row: {
+          amount: number
+          created_at: string | null
+          id: string
+          user_id: string | null
+          win_type: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+          win_type: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          id?: string
+          user_id?: string | null
+          win_type?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
