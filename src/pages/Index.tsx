@@ -16,6 +16,7 @@ import AuthModal from '@/components/AuthModal';
 import SupportBot from '@/components/SupportBot';
 import OnlineStats from '@/components/OnlineStats';
 import SocialShare from '@/components/SocialShare';
+import VisitorCounter from '@/components/VisitorCounter';
 import { useAuth } from '@/hooks/useAuth';
 import { useUserStats } from '@/hooks/useUserStats';
 
@@ -313,8 +314,9 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Футер с социальными сетями */}
-        <div className="mt-12">
+        {/* Футер с социальными сетями и счётчиком */}
+        <div className="mt-12 space-y-6">
+          <VisitorCounter />
           <SocialShare />
         </div>
       </div>
