@@ -12,23 +12,19 @@ import DailyBonus from '@/components/DailyBonus';
 import ReferralSystem from '@/components/ReferralSystem';
 import PlayerRanking from '@/components/PlayerRanking';
 import WinModal from '@/components/WinModal';
-import AuthModal from '@/components/AuthModal';
 import SupportBot from '@/components/SupportBot';
 import OnlineStats from '@/components/OnlineStats';
 import SocialShare from '@/components/SocialShare';
 import VisitorCounter from '@/components/VisitorCounter';
-import { useAuth } from '@/hooks/useAuth';
-import { useUserStats } from '@/hooks/useUserStats';
+import { useLocalStats } from '@/hooks/useLocalStats';
 
 const Index = () => {
-  const { user, signOut } = useAuth();
-  const { stats, updateStats, addWin } = useUserStats();
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const { stats, updateStats, addWin } = useLocalStats();
+  const [isSubscribed, setIsSubscribed] = useState(true); // Всегда true, так как нет аутентификации
   const [claimCount, setClaimCount] = useState(0);
   const [isOnCooldown, setIsOnCooldown] = useState(false);
   const [cooldownTime, setCooldownTime] = useState(0);
   const [showWinModal, setShowWinModal] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const [lastWin, setLastWin] = useState({ type: '', amount: 0 });
 
   // Таймер кулдауна
@@ -50,16 +46,6 @@ const Index = () => {
   }, [cooldownTime]);
 
   const handleClaim = async () => {
-    if (!user) {
-      setShowAuthModal(true);
-      toast({
-        title: "Требуется регистрация!",
-        description: "Зарегистрируйтесь или войдите в аккаунт для начала игры",
-        variant: "destructive",
-      });
-      return;
-    }
-
     if (!isSubscribed || isOnCooldown) return;
 
     const newClaimCount = claimCount + 1;
@@ -151,44 +137,14 @@ const Index = () => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              {user ? (
-                <>
-                  <Badge variant="secondary" className="text-sm bg-green-600 text-white">
-                    👤 {user.email?.split('@')[0]}
-                  </Badge>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={signOut}
-                    className="text-xs bg-red-500 text-white border-red-600 hover:bg-red-600"
-                  >
-                    Выйти
-                  </Button>
-                </>
-              ) : (
-                <Button 
-                  onClick={() => setShowAuthModal(true)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold animate-pulse"
-                  size="lg"
-                >
-                  🔑 ВОЙТИ И ИГРАТЬ
-                </Button>
-              )}
+              <Badge variant="secondary" className="text-sm bg-green-600 text-white">
+                👤 Анонимный игрок
+              </Badge>
             </div>
           </div>
           <p className="text-xl md:text-2xl text-white/95 font-semibold drop-shadow-lg">
             Получай звёзды и Премиум Телеграм бесплатно!
           </p>
-          {!user && (
-            <div className="mt-4 p-4 bg-red-500/90 rounded-lg border-2 border-red-600">
-              <p className="text-white font-bold text-lg">
-                ⚠️ Для игры необходима регистрация! ⚠️
-              </p>
-              <p className="text-white/90">
-                Зарегистрируйтесь бесплатно и начните зарабатывать прямо сейчас!
-              </p>
-            </div>
-          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -253,12 +209,12 @@ const Index = () => {
                 </div>
 
                 <ClaimButton 
-                  isSubscribed={user ? isSubscribed : false}
+                  isSubscribed={isSubscribed}
                   isOnCooldown={isOnCooldown}
                   onClaim={handleClaim}
                 />
 
-                {user && !isSubscribed && (
+                {!isSubscribed && (
                   <div className="mt-4">
                     <Button 
                       className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6"
@@ -275,22 +231,6 @@ const Index = () => {
                   </div>
                 )}
 
-                {!user && (
-                  <div className="mt-4 p-4 bg-yellow-100 rounded-lg border-2 border-yellow-400">
-                    <p className="text-lg font-bold text-gray-800 mb-2">
-                      🚫 Игра заблокирована
-                    </p>
-                    <p className="text-gray-700 mb-3">
-                      Войдите в аккаунт или зарегистрируйтесь для начала игры
-                    </p>
-                    <Button
-                      onClick={() => setShowAuthModal(true)}
-                      className="bg-green-600 hover:bg-green-700 text-white font-bold"
-                    >
-                      🔓 РАЗБЛОКИРОВАТЬ ИГРУ
-                    </Button>
-                  </div>
-                )}
               </CardContent>
             </Card>
 
@@ -326,11 +266,6 @@ const Index = () => {
         isOpen={showWinModal}
         onClose={() => setShowWinModal(false)}
         win={lastWin}
-      />
-      
-      <AuthModal 
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
       />
       
       <SupportBot />
