@@ -20,7 +20,10 @@ import { useLocalStats } from '@/hooks/useLocalStats';
 
 const Index = () => {
   const { stats, updateStats, addWin } = useLocalStats();
-  const [isSubscribed, setIsSubscribed] = useState(true); // Всегда true, так как нет аутентификации
+  const [isSubscribed, setIsSubscribed] = useState(() => {
+    // Проверяем, подписан ли пользователь (сохраняем в localStorage)
+    return localStorage.getItem('telegramSubscribed') === 'true';
+  });
   const [claimCount, setClaimCount] = useState(0);
   const [isOnCooldown, setIsOnCooldown] = useState(false);
   const [cooldownTime, setCooldownTime] = useState(0);
@@ -224,6 +227,7 @@ const Index = () => {
                       onClick={() => {
                         window.open('https://t.me/zarabotay_depin', '_blank');
                         setIsSubscribed(true);
+                        localStorage.setItem('telegramSubscribed', 'true');
                       }}
                     >
                       📱 ПОДПИСАТЬСЯ НА КАНАЛ!
