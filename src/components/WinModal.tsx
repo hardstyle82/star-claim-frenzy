@@ -23,9 +23,9 @@ const WinModal: React.FC<WinModalProps> = ({ isOpen, onClose, win }) => {
 
       const frame = () => {
         confetti({
-          particleCount: 2,
-          startVelocity: 30,
-          spread: 360,
+          particleCount: 1,
+          startVelocity: 20,
+          spread: 180,
           origin: {
             x: Math.random(),
             y: Math.random() - 0.2

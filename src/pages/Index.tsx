@@ -124,32 +124,35 @@ const Index = () => {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-6 max-w-6xl">
+        {/* Счётчик посетителей */}
+        <VisitorCounter />
+        
         {/* Заголовок с улучшенной анимацией */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="flex justify-between items-start mb-4">
             <div></div>
             <div className="text-center">
-              <h1 className="text-4xl md:text-7xl font-bold text-white animate-pulse drop-shadow-2xl">
+              <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold text-white animate-pulse drop-shadow-2xl">
                 💰 STAR CLICKER 💰
               </h1>
-              <div className="text-2xl md:text-3xl font-bold text-yellow-300 animate-bounce mt-2">
+              <div className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-300 animate-bounce mt-2">
                 🎯 ЗАРАБОТАЙ РЕАЛЬНЫЕ ДЕНЬГИ! 🎯
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <Badge variant="secondary" className="text-sm bg-green-600 text-white">
+              <Badge variant="secondary" className="text-xs md:text-sm bg-green-600 text-white">
                 👤 Анонимный игрок
               </Badge>
             </div>
           </div>
-          <p className="text-xl md:text-2xl text-white/95 font-semibold drop-shadow-lg">
+          <p className="text-lg md:text-xl lg:text-2xl text-white/95 font-semibold drop-shadow-lg px-4">
             Получай звёзды и Премиум Телеграм бесплатно!
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
           {/* Левая колонка - основная игра */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 lg:space-y-6">
             {/* Прогресс-бары */}
             <Card className="bg-white/95 backdrop-blur-sm border-2 border-yellow-400 shadow-2xl">
               <CardHeader className="bg-gradient-to-r from-yellow-400 to-green-500">
@@ -193,12 +196,12 @@ const Index = () => {
 
             {/* Основная кнопка CLAIM */}
             <Card className="bg-white/95 backdrop-blur-sm border-2 border-yellow-400 shadow-2xl">
-              <CardContent className="p-8 text-center">
-                <div className="mb-6">
-                  <div className="text-3xl font-bold mb-2 text-green-600">
+              <CardContent className="p-4 md:p-6 lg:p-8 text-center">
+                <div className="mb-4 md:mb-6">
+                  <div className="text-2xl md:text-3xl font-bold mb-2 text-green-600">
                     Ваши звёзды: {stats.stars} ⭐
                   </div>
-                  <div className="text-xl font-semibold text-green-700 mb-2">
+                  <div className="text-lg md:text-xl font-semibold text-green-700 mb-2">
                     💵 Ваш баланс: ${Math.floor(stats.stars / 100)} USD
                   </div>
                   {isOnCooldown && (
@@ -254,9 +257,8 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Футер с социальными сетями и счётчиком */}
+        {/* Футер с социальными сетями */}
         <div className="mt-12 space-y-6">
-          <VisitorCounter />
           <SocialShare />
         </div>
       </div>
